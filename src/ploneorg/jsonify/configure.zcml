@@ -1,0 +1,29 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="ploneorg.jsonify">
+
+    <!-- The actual magic view -->
+    <browser:page
+        for="*"
+        name="get_item"
+        class=".jsonify.GetItem"
+        permission="zope2.ViewManagementScreens"
+        />
+
+    <browser:page
+        for="*"
+        name="get_children"
+        class=".jsonify.GetChildren"
+        permission="zope2.ViewManagementScreens"
+        />
+
+    <browser:page
+        for="*"
+        name="get_catalog_results"
+        class=".jsonify.GetCatalogResults"
+        permission="zope2.ViewManagementScreens"
+        />
+
+</configure>
