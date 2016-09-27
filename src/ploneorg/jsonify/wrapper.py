@@ -1,6 +1,7 @@
 import os
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
+from ploneorg.jsonify import HAS_RATINGS
 from zope.annotation.interfaces import IAnnotations
 
 import DateTime
@@ -534,3 +535,16 @@ class Wrapper(dict):
         if self.context.portal_type == 'Collage':
             if 'Collage' in IAnnotations(self.context):
                 self['_collage_info'] = IAnnotations(self.context)['Collage']
+
+    def get_ratings(self):
+        """ Get the rating info from cioppino.twothumbs (if any). """
+        if HAS_RATINGS:
+            yays = 'cioppino.twothumbs.yays'
+            nays = 'cioppino.twothumbs.nays'
+            annotations = IAnnotations(self.context)
+
+            if annotations.get(yays, False):
+                self['_ratings'] = {
+                    'ups': [user for user in annotations[yays]],
+                    'downs': [user for user in annotations[nays]],
+                }
